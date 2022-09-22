@@ -1,15 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { Link } from "react-router-dom";
 
 export default function header()
 {
     return(
         <Header>
-            <Name>D-blog</Name>
-            <Writing>글 쓰기</Writing>
-            <Login>로그인</Login>
-            <Register>회원가입</Register>
+            <Link to = "/">
+            <Name>D-blog</Name></Link>
+            <Link to = "/write">
+            <Writing>글 쓰기</Writing></Link>
+            <Link to = "/login">
+            <Login>로그인</Login></Link>
+            <Link to = "/register">
+            <Register>회원가입</Register></Link>
         </Header>
 
     )

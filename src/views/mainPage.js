@@ -7,7 +7,7 @@ export default function mainPage(){
         <div>
             <Header />
             <div className="Text1"></div>
-            <img className="Adv" src="img/bsnyou.png"  />
+            <img className="Adv" src="img/bsnyou.png" />
             <div className="Text2"></div>
 
         </div>
