@@ -1,0 +1,112 @@
+.Adv {
+    margin-left: 1200px;
+    position: fixed;
+    bottom: 43px;
+}
+
+.Text1{
+    margin-left: 80px;
+    margin-top: 72px;
+    border: solid 5px;
+    width: 1000px;
+    height: 250px;
+}
+
+.Text2{
+    margin-left: 80px;
+    margin-top: 80px;
+    border: solid 5px;
+    width: 1000px;
+    height: 250px;
+}
+
+.idbox_l{
+    margin-top: 60px;
+    margin-left: 570px;
+    border: solid 4px;
+    width: 550px;
+    height: 50px;
+}
+
+.pwbox_l{
+    margin-top: 80px;
+    margin-left: 570px;
+    border: solid 4px;
+    width: 550px;
+    height: 50px;
+}
+
+.idbox_r{
+    margin-top: 50px;
+    margin-left: 570px;
+    border: solid 4px;
+    width: 550px;
+    height: 50px;
+    font-size: 40px;
+    text-align: center;
+}
+
+.pwbox_r{
+    margin-top: 50px;
+    margin-left: 570px;
+    border: solid 4px;
+    width: 550px;
+    height: 50px;
+}
+
+.pwchbox_r{
+    margin-top: 50px;
+    margin-left: 570px;
+    border: solid 4px;
+    width: 550px;
+    height: 50px;
+}
+
+.namebox_r{
+    margin-top: 50px;
+    margin-left: 570px;
+    border: solid 4px;
+    width: 550px;
+    height: 50px;
+}
+
+.logbutton{
+    background-color: #6667AB;
+    border-color: #6667AB;
+    font-size: 30px;
+    color: #FFFFFF;
+    width: 200px;
+    height: 70px;
+    border-radius: 20px;
+    margin-top: 80px;
+    margin-left: 750px;
+}
+
+.regbutton{
+    background-color: #6667AB;
+    border-color: #6667AB;
+    font-size: 30px;
+    color: #FFFFFF;
+    width: 200px;
+    height: 70px;
+    border-radius: 20px;
+    margin-top: 40px;
+    margin-left: 750px;
+}
+
+input{
+    font-size: 40px;
+    text-align: center; 
+}
+
+.title_w{
+    width: 800px;
+    border: solid 3px;
+}
+
+.content_w{
+    width: 800px;
+    height: 400px;
+    border: solid 3px;
+    vertical-align: top;
+}

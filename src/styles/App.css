@@ -1,0 +1,25 @@
+@charset "UTF-8"
+
+@font-face {
+    font-family: 'maplestory';
+    src: url('./font/Maplestory\ Light.ttf');
+    font-weight: normal;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: none;
+}
+
+ul,ol{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+    font-family: 'maplestory';
+}
