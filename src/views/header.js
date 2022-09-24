@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { Link } from "react-router-dom";
 
-export default function header()
+export default function Header()
 {
     return(
-        <Header>
+        <StyledHeader>
             <Link to = "/">
             <Name>D-blog</Name></Link>
             <Link to = "/write">
@@ -15,12 +15,12 @@ export default function header()
             <Login>로그인</Login></Link>
             <Link to = "/register">
             <Register>회원가입</Register></Link>
-        </Header>
+        </StyledHeader>
 
     )
 }
 
-const Header = styled.div`
+const StyledHeader = styled.div`
     background-color: #6667AB;
     width: 100%;
     height: 90px;

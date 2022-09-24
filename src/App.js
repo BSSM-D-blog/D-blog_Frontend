@@ -1,10 +1,6 @@
 import './styles/App.css';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import WritePage from './views/writePage';
-import MainPage from './views/mainPage';
-import LoginPage from './views/loginPage';
-import RegisterPage from './views/registerPage';
-import ReadPage from './views/readPage';
+import { WritePage, MainPage, LoginPage, RegisterPage, ReadPage } from './allFiles';
 
 function App() {
   return (
