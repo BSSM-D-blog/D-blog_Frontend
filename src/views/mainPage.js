@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./header"
 import '../styles/styles.css';
 
 export default function mainPage(){
+
     return(
         <div>
             <Header />

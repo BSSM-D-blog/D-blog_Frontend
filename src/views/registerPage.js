@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "./header";
 import '../styles/styles.css';
+import { instance } from "../instance";
 
 export default function RegisterPage()
 {
@@ -21,6 +22,15 @@ export default function RegisterPage()
         setUser(newInput);
     }
 
+    const givereg = async () => {
+        try{
+            console.log('실행')
+            instance.post('/signup', user)
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     return(
         <div>
             <Header />
@@ -29,7 +39,7 @@ export default function RegisterPage()
             <input type="password" className="pwbox_r" name="password1" value={user.password1} placeholder="비밀번호" onChange={(e)=>{change(e)}} /><br />
             <input type="password" className="pwchbox_r" name="password2" value={user.password2} placeholder="비밀번호 체크" onChange={(e)=>{change(e)}} /><br />
             <input type="text" className="namebox_r" name="nickname" value={user.nickname} placeholder="닉네임" onChange={(e)=>{change(e)}} /><br />
-            <button className="regbutton">회원가입</button>
+            <button className="regbutton" onClick={givereg}>회원가입</button>
         </div>
     )
 }
