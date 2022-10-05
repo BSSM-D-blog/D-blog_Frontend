@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import Header from "./header"
 import '../styles/styles.css';
 
-export default function mainPage(){
-
+export default function MainPage(){
     return(
         <div>
             <Header />
