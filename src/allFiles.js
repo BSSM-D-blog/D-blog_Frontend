@@ -1,8 +1,9 @@
-import LoginPage from "./views/loginPage";
-import RegisterPage from "./views/registerPage";
+import LoginPage from "./views/beforeLogin/auth/loginPage";
+import RegisterPage from "./views/beforeLogin/auth/registerPage";
 import MainPage from "./views/mainPage";
-import Header from "./views/header";
-import WritePage from './views/writePage';
-import ReadPage from './views/readPage';
+import Header from "./views/beforeLogin/header/header";
+import WritePage from './views/afterLogin/board/writePage';
+import ReadPage from './views/afterLogin/board/readPage';
+import Forbidden from "./views/beforeLogin/forbidden";
 
-export { LoginPage, RegisterPage, MainPage, Header, WritePage, ReadPage };
+export { LoginPage, RegisterPage, MainPage, Header, WritePage, ReadPage, Forbidden };

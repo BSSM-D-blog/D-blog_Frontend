@@ -1,12 +1,11 @@
 import React from 'react';
-import Editor from "./editor/text";
-import Header from "./header";
+import LoginHeader from "../header/loginHeader";
+
 function WritePage() 
 {
     return (
         <div>
-            <Header />
-            <Editor />
+            <LoginHeader />
         </div>
     );
 }

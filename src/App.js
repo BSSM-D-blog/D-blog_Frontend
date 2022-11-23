@@ -1,34 +1,33 @@
 import './styles/App.css';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import WritePage from './views/writePage';
-import MainPage from './views/mainPage';
-import LoginPage from './views/loginPage';
-import RegisterPage from './views/registerPage';
-import ReadPage from './views/readPage';
-import { useEffect, useState } from 'react';
-import { instance } from './instance';
-import axios from 'axios';
+import { WritePage, MainPage, LoginPage, RegisterPage, ReadPage,Forbidden } from './allFiles';
+import { createContext, useEffect, useState } from 'react';
+import {instance} from "./util/instance";
+
+const userinfo = {
+  id: 0,
+  nickname: "",
+  created: "",
+  role: "",
+  profile: "",    
+  isLogin: false,
+}
+
+export const userContext = createContext(userinfo);
 
 function App() {
 
-  const [useinfo, setUserinfo] = useState({
-    id: 0,
-    nickname: "",
-    created: "",
-    role: "",
-    profile: "",    
-    isLogin: false,
-  })
+  const [user, setUser] = useState(userinfo)
 
   useEffect(()=>{
     (async()=>{
       try{
-        setUserinfo({
+        setUser({
           ...(await getUser()).data,
           isLogin: true,
         })
       }catch(error){
-        setUserinfo((prev)=>({
+        setUser((prev)=>({
           ...prev,
           isLogin: false,
         }))
@@ -38,18 +37,21 @@ function App() {
   }, []);
 
   const getUser = () => {
-    return axios.get("/api/user", { headers: { Authorization: localStorage.getItem('accessToken')}});
+    return instance.get("/api/user");
   }
 
   return (
       <BrowserRouter>
-        <Routes>
-          <Route path = "/write" element={<WritePage/>}/>
-          <Route path = "/" element={<MainPage/>}/>
-          <Route path = "/login" element={<LoginPage/>}/>
-          <Route path = "/register" element={<RegisterPage/>}/>
-          <Route path = "/read" element={<ReadPage/>}/>
-        </Routes>
+        <userContext.Provider value={user}>
+          <Routes>
+            <Route path = "/write" element={<WritePage/>}/>
+            <Route path = "/" element={<MainPage/>}/>
+            <Route path = "/login" element={<LoginPage/>}/>
+            <Route path = "/register" element={<RegisterPage/>}/>
+            <Route path = "/read" element={<ReadPage/>}/>
+            <Route path={"/forbidden"} element={<Forbidden/>}/>
+          </Routes>
+        </userContext.Provider>
       </BrowserRouter>
   );
 }
