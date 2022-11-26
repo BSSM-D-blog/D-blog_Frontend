@@ -1,14 +1,20 @@
 import styled from 'styled-components'
 import {Link, useNavigate} from "react-router-dom";
-import React, {useContext} from "react";
-import {userContext} from "../../../App";
+import React, {useContext, useState} from "react";
+import {UserContext} from "../../../App";
+import { AiOutlineUser } from "react-icons/ai";
 
 const LoginHeader = () => {
-    const user = useContext(userContext);
+
+    const user = useContext(UserContext);
     const nav = useNavigate()
+    const [userinfo, setUserinfo] = useState();
+
     if(!user.isLogin){
         nav('/forbidden')
     }
+
+
     return(
         <StyledHeader>
             <Link to = "/">
@@ -16,12 +22,12 @@ const LoginHeader = () => {
             <Link to = "/write">
                 <Writing>글 쓰기</Writing></Link>
             <div></div>
-            <Link to = "/login">
-                <Login>로그인</Login>
-            </Link>
-            <Link to = "/register">
-                <Register>회원가입</Register>
-            </Link>
+            <ProfileContainer>
+                <span>{user.nickname}</span>
+                {user.profile === null ? 
+                    <AiOutlineUser className='user-profile' /> :
+                    <img src={user.profile} className="user-profile" alt="icon" /> }
+            </ProfileContainer>
         </StyledHeader>
     )
 }
@@ -29,10 +35,10 @@ const LoginHeader = () => {
 const StyledHeader = styled.div`
     background-color: #6667AB;
     width: 100%;
-    height: 90px;
+    height: 80px;
     color: #CACBD6;
     display: grid;
-    grid-template-columns: 200px 200px 1fr 100px 200px;
+    grid-template-columns: 200px 200px 1fr 200px;
     align-content: center;
 `
 
@@ -43,20 +49,25 @@ const Writing = styled.h1`
 `
 
 const Name = styled.h1`
-    font-size: 40px;
+    font-size: 35px;
     color: #CACBD6;
     margin-left: 30px;
     cursor: pointer;
-    
 `
-const Login = styled.h1`
-    color: #CACBD6;
+
+const ProfileContainer = styled.div`
+    display: flex;
+    align-items: center;
+    font-size: 30px;
     cursor: pointer;
-`
-const Register = styled.h1`
-    margin-left: 35px;
-    color: #CACBD6;
-    cursor: pointer;
+    span{
+        margin-right: 20px;
+    }
+    .user-profile{
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+    }
 `
 
 export default LoginHeader
