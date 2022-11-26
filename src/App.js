@@ -2,7 +2,7 @@ import './styles/App.css';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { WritePage, MainPage, LoginPage, RegisterPage, ReadPage,Forbidden } from './allFiles';
 import { createContext, useEffect, useState } from 'react';
-import {instance} from "./util/instance";
+import axios from 'axios';
 
 const userinfo = {
   id: 0,
@@ -13,7 +13,7 @@ const userinfo = {
   isLogin: false,
 }
 
-export const userContext = createContext(userinfo);
+export const UserContext = createContext(userinfo);
 
 function App() {
 
@@ -26,6 +26,7 @@ function App() {
           ...(await getUser()).data,
           isLogin: true,
         })
+        console.log(user);
       }catch(error){
         setUser((prev)=>({
           ...prev,
@@ -37,12 +38,16 @@ function App() {
   }, []);
 
   const getUser = () => {
-    return instance.get("/api/user");
+    return axios.get("/api/user", {
+      headers: {
+        Authorization: localStorage.getItem("accessToken")
+      }
+    })
   }
 
   return (
       <BrowserRouter>
-        <userContext.Provider value={user}>
+        <UserContext.Provider value={user}>
           <Routes>
             <Route path = "/write" element={<WritePage/>}/>
             <Route path = "/" element={<MainPage/>}/>
@@ -51,7 +56,7 @@ function App() {
             <Route path = "/read" element={<ReadPage/>}/>
             <Route path={"/forbidden"} element={<Forbidden/>}/>
           </Routes>
-        </userContext.Provider>
+        </UserContext.Provider>
       </BrowserRouter>
   );
 }

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Header } from '../../../allFiles'
 import {Link, useNavigate} from "react-router-dom";
-import {noAuthInstance} from "../../../util/instance";
 import axios from "axios";
 
 export default function LoginPage()
@@ -24,10 +23,10 @@ export default function LoginPage()
 
     const postLogin = async () => {
         try{
-            const response = (await axios.post('/login', login)).data
-            localStorage.setItem('accessToken', response.accessToken)
-            localStorage.setItem('refreshToken', response.refreshToken)
+            const response = (await axios.post('/auth/login', login)).data
             alert('성공');
+            localStorage.setItem("accessToken", response.accessToken);
+            localStorage.setItem("refreshToken", response.refreshToken);
             nav('/')
         }catch(error){
             alert('실패');

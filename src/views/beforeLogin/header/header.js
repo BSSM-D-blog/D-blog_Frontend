@@ -22,7 +22,7 @@ export default function Header()
 const StyledHeader = styled.div`
     background-color: #6667AB;
     width: 100%;
-    height: 90px;
+    height: 80px;
     color: #CACBD6;
     display: grid;
     grid-template-columns: 200px 1fr 100px 200px;
