@@ -27,6 +27,7 @@ const StyledHeader = styled.div`
     display: grid;
     grid-template-columns: 200px 1fr 100px 200px;
     align-content: center;
+  position: fixed;
 `
 
 const Name = styled.h1`

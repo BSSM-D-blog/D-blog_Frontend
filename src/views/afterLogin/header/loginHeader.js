@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import {Link, useNavigate} from "react-router-dom";
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {UserContext} from "../../../App";
 import { AiOutlineUser } from "react-icons/ai";
 
@@ -8,7 +8,6 @@ const LoginHeader = () => {
 
     const user = useContext(UserContext);
     const nav = useNavigate()
-    const [userinfo, setUserinfo] = useState();
 
     if(!user.isLogin){
         nav('/forbidden')
@@ -40,6 +39,7 @@ const StyledHeader = styled.div`
     display: grid;
     grid-template-columns: 200px 200px 1fr 200px;
     align-content: center;
+  position: fixed;
 `
 
 const Writing = styled.h1`
