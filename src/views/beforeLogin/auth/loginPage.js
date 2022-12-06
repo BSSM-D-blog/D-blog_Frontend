@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Header } from '../../../allFiles'
-import {Link, useNavigate} from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import Header from "../header/header";
+import { instance } from "../../../util/axiosSetting";
 
 export default function LoginPage()
 {
-    const nav = useNavigate();
     const [login, setLogin] = useState({
         username: "",
         password: ""
     });
+
+    const [disable, setDisable] = useState(false);
 
     const change = (e) => {
         const { name, value } = e.target;
@@ -21,27 +23,32 @@ export default function LoginPage()
         setLogin(newInput);
     }
 
-    const postLogin = async () => {
-        try{
-            const response = (await axios.post('/auth/login', login)).data
+    const postLogin = (e) => {
+        e.preventDefault();
+        instance.post('/auth/login', login)
+        .then((response)=>{
+            console.log(response);
+            localStorage.setItem("accessToken", response.data.accessToken);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
             alert('성공');
-            localStorage.setItem("accessToken", response.accessToken);
-            localStorage.setItem("refreshToken", response.refreshToken);
-            nav('/')
-        }catch(error){
+            setDisable(true);
+            window.location.href= "/"
+            // nav("/");
+        })
+        .catch((error)=>{
             alert('실패');
             console.log(error);
-        }
+        })
     }
 
     return(
         <div>
             <Header />
-            <LoginContainer>
+            <LoginContainer onSubmit={postLogin}>
                 <Login>로그인</Login>
-                <Idbox type="text" name="username" value={login.username} onChange={(e)=>change(e)} placeholder="아이디" />
-                <Idbox type="password" name="password" value={login.password} onChange={(e)=>change(e)} placeholder="비밀번호" />
-                <LoginButton onClick={postLogin}>로그인</LoginButton>
+                <InputBox type="text" name="username" value={login.username} onChange={change} placeholder="아이디" />
+                <InputBox type="password" name="password" value={login.password} onChange={change} placeholder="비밀번호" />
+                <LoginButton type="submit" disabled={disable}>로그인</LoginButton>
                 <GotoRegister to="/register">회원가입 하러가기</GotoRegister>
             </LoginContainer>
         </div>
@@ -50,7 +57,7 @@ export default function LoginPage()
 
 const GotoRegister = styled(Link)`
     margin-top: 50px;
-    font-size: 15px;
+    font-size: 20px;
     color: black;
 `
 
@@ -65,7 +72,7 @@ const LoginButton = styled.button`
     margin-top: 80px;
 `
 
-const Idbox = styled.input`
+const InputBox = styled.input`
     margin-top: 60px;
     border: solid 2px;
     width: 550px;
@@ -74,14 +81,14 @@ const Idbox = styled.input`
     text-align: center;
 `
 
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
+  padding-top: 150px;
 `
 
-const Login = styled.h1`
+const Login = styled.label`
     font-size: 45px;
     text-align: center;
-    margin-top: 90px;
 `;

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Header } from '../../../allFiles'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Header from "../header/header";
+import { instance } from "../../../util/axiosSetting";
 
 export default function RegisterPage()
 {
@@ -25,7 +26,7 @@ export default function RegisterPage()
 
     const postUser = async () => {
         try{
-            const result = await axios.post("/auth/signup", user);
+            const result = await instance.post("/auth/signup", user);
             console.log(result.data);
             if(result.data) {
                 alert('성공');

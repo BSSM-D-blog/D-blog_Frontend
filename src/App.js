@@ -1,8 +1,13 @@
 import './styles/App.css';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { WritePage, MainPage, LoginPage, RegisterPage, ReadPage,Forbidden } from './allFiles';
 import { createContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import WritePage from "./views/afterLogin/board/writePage";
+import MainPage from "./views/mainPage";
+import LoginPage from "./views/beforeLogin/auth/loginPage";
+import RegisterPage from "./views/beforeLogin/auth/registerPage";
+import ReadPage from "./views/afterLogin/board/readPage";
+import Forbidden from "./views/beforeLogin/forbidden";
+import {instance} from "./util/axiosSetting";
 
 const userinfo = {
   id: 0,
@@ -38,11 +43,7 @@ function App() {
   }, []);
 
   const getUser = () => {
-    return axios.get("/api/user", {
-      headers: {
-        Authorization: localStorage.getItem("accessToken")
-      }
-    })
+    return instance.get("/api/user")
   }
 
   return (

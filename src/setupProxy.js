@@ -4,7 +4,7 @@ module.exports = app => {
     app.use(createProxyMiddleware(
         ['/api', '/auth'],
             {
-                target: 'http://localhost:8080',
+                target: 'http://10.150.149.114:8080',
                 changeOrigin: true,
             }
         )
