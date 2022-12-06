@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {Header} from "../../allFiles";
+import Header from "./header/header";
 
 const Forbidden = () => {
     return(
@@ -12,7 +12,7 @@ const Forbidden = () => {
 
 const Title = styled.h1`
   text-align: center;
-  margin-top: 200px;
+  padding-top: 200px;
   font-size: 50px;
 `
 
