@@ -10,7 +10,18 @@ import ReactLoading from 'react-loading';
 
 export default function MainPage(){
     const user = useContext(UserContext)
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState([{
+        category: "",
+        content: "",
+        created: "",
+        filePath: "",
+        id: 0,
+        profile: "",
+        title: "",
+        user: "",
+        userid: 0,
+        username: "",
+    }]);
 
     const [page, setPage] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
@@ -34,6 +45,7 @@ export default function MainPage(){
             try{
                 setLoading(true)
                 const posts = (await getPosts()).data;
+                console.log(posts)
                 setPosts(posts)
                 setLoading(false)
             }catch(error){
