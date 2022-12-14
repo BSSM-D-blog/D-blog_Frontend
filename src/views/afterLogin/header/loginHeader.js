@@ -1,18 +1,19 @@
 import styled from 'styled-components'
 import {Link, useNavigate} from "react-router-dom";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {UserContext} from "../../../App";
 import { AiOutlineUser } from "react-icons/ai";
+import LoginHeaderModal from "./loginHeaderModal";
 
 const LoginHeader = () => {
+    const [modal, setModal] = useState(false)
 
     const user = useContext(UserContext);
-    const nav = useNavigate()
+    const navigator = useNavigate();
 
-    if(!user.isLogin){
-        nav('/forbidden')
+    const loginHeaderModal = () => {
+        setModal((prev)=>!prev);
     }
-
 
     return(
         <StyledHeader>
@@ -21,11 +22,12 @@ const LoginHeader = () => {
             <Link to = "/write">
                 <Writing>글 쓰기</Writing></Link>
             <div></div>
-            <ProfileContainer>
+            <ProfileContainer onClick={loginHeaderModal}>
+                {modal && <LoginHeaderModal user={user} />}
                 <span>{user.nickname}</span>
                 {user.profile === null ? 
                     <AiOutlineUser className='user-profile' /> :
-                    <img src={user.profile} className="user-profile" alt="icon" /> }
+                    <img src={"http://" + user.profile} className="user-profile" alt="icon" /> }
             </ProfileContainer>
         </StyledHeader>
     )
@@ -38,8 +40,9 @@ const StyledHeader = styled.div`
     color: #CACBD6;
     display: grid;
     grid-template-columns: 200px 200px 1fr 200px;
-    align-content: center;
-  position: fixed;
+    align-items: center;
+    position: fixed;
+    z-index: 3;
 `
 
 const Writing = styled.h1`
@@ -60,6 +63,9 @@ const ProfileContainer = styled.div`
     align-items: center;
     font-size: 30px;
     cursor: pointer;
+    color: #CACBD6;
+  position: relative;
+  height: 100%;
     span{
         margin-right: 20px;
     }
