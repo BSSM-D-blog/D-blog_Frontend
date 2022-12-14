@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useLayoutEffect, useState} from "react";
 import Header from "./beforeLogin/header/header"
 import styled from 'styled-components'
 import { UserContext } from "../App";
@@ -6,6 +6,7 @@ import LoginHeader from "./afterLogin/header/loginHeader";
 import PreviewBoard from "./afterLogin/main/previewBoard";
 import PageNum from "./afterLogin/main/pageNum";
 import {instance} from "../util/axiosSetting";
+import ReactLoading from 'react-loading';
 
 export default function MainPage(){
     const user = useContext(UserContext)
@@ -13,23 +14,28 @@ export default function MainPage(){
 
     const [page, setPage] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
+    const [loading, setLoading] = useState(true);
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
         (async()=>{
             try{
+                setLoading(true);
                 const pages = (await getPages()).data;
                 setPage(pages);
+                setLoading(false);
             }catch(error){
                 console.log(error);
             }
         })();
     }, [])
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
         (async ()=>{
             try{
+                setLoading(true)
                 const posts = (await getPosts()).data;
                 setPosts(posts)
+                setLoading(false)
             }catch(error){
                 console.log(error)
             }
@@ -37,7 +43,7 @@ export default function MainPage(){
     }, [currentPage])
 
     const getPosts = () => {
-        return instance.get(`/api/board?page=${currentPage}&size=2`)
+        return instance.get(`/api/board?page=${currentPage}`)
     }
 
     const getPages = () => {
@@ -46,7 +52,7 @@ export default function MainPage(){
 
     const setPageNum = () => {
         const arr = []
-        for(let i=0;i<page/2;i++){
+        for(let i=0;i<page;i++){
             arr.push(<PageNum key={i} state={currentPage} setState={setCurrentPage} num={i} />)
         }
         return arr;
@@ -58,11 +64,20 @@ export default function MainPage(){
             <Adv src="img/bsnyou.png" alt="icon" />
             <PostContainer>
                 <div>
-                    {posts.map((value) => {
-                        return(
-                            <PreviewBoard value={value} key={value.id} />
-                        )
-                    })}
+                    {!loading && posts.map((value, index) => {
+                            return (
+                                <PreviewBoard value={value} key={index}/>
+                            )
+                        })
+                    }
+                    {user.isLogin && loading &&
+                        <ReactLoading
+                            className={"loading"}
+                            type={"bubbles"}
+                            color={"#000000"}
+                            width={200}
+                            height={200}
+                        />}
                 </div>
                 <PageContainer>
                     {setPageNum()}
@@ -93,5 +108,8 @@ const PostContainer = styled.div`
   position: absolute;
   top: 50%;
   transform: translate(0, -60%);
+  .loading{
+    margin-bottom: 10rem;
+  }
 `
 
