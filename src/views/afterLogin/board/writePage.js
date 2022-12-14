@@ -10,17 +10,16 @@ function WritePage()
     const nav = useNavigate();
     const user = useContext(UserContext);
     const [input, setInput] = useState({
-        user: user.nickname,
+        user: user.username,
         title: "",
         content: "",
         category: null,
         file: null,
     })
-    const data = new FormData();
-
     const [files, setFiles] = useState();
-    
     const [category, setCategory] = useState([]);
+
+    if(!user.isLogin) nav("/forbidden")
 
     const change = (e) => {
         const { name, value } = e.target;
@@ -34,7 +33,6 @@ function WritePage()
     useEffect(()=>{
         instance.get('/api/category')
         .then((response)=>{
-            console.log(response.data)
             setCategory(response.data)
         })
         .catch((error)=>{
@@ -53,10 +51,10 @@ function WritePage()
 
     const postBoard = (e) => {
         e.preventDefault();
-        
+        const data = new FormData();
         if(input.file !== null) data.append('file', input.file);
         if(input.category !== null) data.append("category", input.category)
-        data.append("user", user.nickname)
+        data.append("user", user.username)
         if(input.title === ""){
             alert("제목이 입력되지 않았습니다.");
             return false
@@ -73,7 +71,7 @@ function WritePage()
                 'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>'
             }
         })
-        .then((response)=>{
+        .then(()=>{
             nav("/")
         })
         .catch((error)=>{
@@ -92,8 +90,8 @@ function WritePage()
                     </li>
                     <li>
                         <p>카테고리</p>
-                        <select name="category">
-                            <option value={""}>카테고리를 선택해주세요.</option>
+                        <select name="category" onChange={change}>
+                            <option value={""} hidden>카테고리를 선택해주세요.</option>
                             {category.map((value, index)=>{
                                 return <option key={index} value={value.category}>{value.name}</option>
                             })}
@@ -106,7 +104,7 @@ function WritePage()
                     <li>
                         <p>파일첨부</p>
                         <div>
-                            <input type="text" value={files} placeholder="첨부파일" readOnly />
+                            <input type="text" value={files} placeholder="첨부파일 (이미지만 가능합니다)" readOnly />
                             <label htmlFor='file_post'>파일 선택</label>
                             <input id="file_post" accept='image/jpg, image/png, image/jpeg, svg' type={"file"} onChange={fileChange} name="file" />
                         </div>
@@ -124,7 +122,6 @@ const Center = styled.li`
     text-align: center;
     margin-top: 40px;
     input{
-        font-family: 'maplestory';
         width: 120px;
         height: 40px;
         color: white;
@@ -155,22 +152,23 @@ const WriteUl = styled.ul`
             font-size: 18px;
             width: 100%;
             border-radius: 10px;
-            font-family: 'maplestory';
         }
         select{
             border: 2px solid black;
             font-size: 17px;
-            font-family: 'maplestory';
             padding: 5px 10px;
             border-radius: 10px;
+            width: 250px;
         }
+      option{
+        width: 250px;
+      }
         textarea{
             border: 2px solid black;
             font-size: 18px;
             padding: 10px;
             border-radius: 10px;
             width: 100%;
-            font-family: 'maplestory';
             height: 200px;
         }
         div{
