@@ -18,24 +18,18 @@ instance.interceptors.response.use(
         return config
     },
     async (error)=>{
-        console.log(error)
         if(error.response.status === 401 || error.response.status === 403){
             try{
+                localStorage.removeItem("accessToken");
                 const originalRequest = error.config;
-                if(ValidateTimeRefreshToken() && !ValidateTimeAccessToken()){
-                    const res = await axios.post('http://10.150.149.114:8080/refresh', {
-                        refreshToken: localStorage.getItem("refreshToken")
+                if(localStorage.getItem("refreshToken") && ValidateTimeRefreshToken() && !ValidateTimeAccessToken()){
+                    const res = await axios.post('http://10.150.149.114:8080/auth/refresh', {
+                        "refreshToken": localStorage.getItem("refreshToken")
                     });
-                    console.log(res)
                     if(res.status === 200){
                         localStorage.setItem("accessToken", res.data.accessToken)
                         return axios(originalRequest);
                     }
-                }
-                else if(!ValidateTimeRefreshToken()){
-                    localStorage.clear();
-                    alert("다시 로그인해주세요.");
-                    window.location.href="http://localhost:3000/login";
                 }
             }catch(error){
                 console.log(error)

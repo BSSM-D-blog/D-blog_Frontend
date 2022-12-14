@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Header from "../header/header";
 import { instance } from "../../../util/axiosSetting";
 
@@ -44,10 +43,10 @@ export default function RegisterPage()
             <Header />
             <Register>회원가입</Register>
             <RegisterContainer>
-                <IBox type="text" name="username" value={user.username} onChange={(e)=>{change(e)}} placeholder="아이디"/>
-                <IBox type="password" name="password1" value={user.password1} placeholder="비밀번호" onChange={(e)=>{change(e)}} />
-                <IBox type="password" name="password2" value={user.password2} placeholder="비밀번호 체크" onChange={(e)=>{change(e)}} />
-                <IBox type="text" name="nickname" value={user.nickname} placeholder="닉네임" onChange={(e)=>{change(e)}} />
+                <IBox type="text" name="username" value={user.username} onChange={change} placeholder="아이디"/>
+                <IBox type="password" name="password1" value={user.password1} placeholder="비밀번호" onChange={change} />
+                <IBox type="password" name="password2" value={user.password2} placeholder="비밀번호 체크" onChange={change} />
+                <IBox type="text" name="nickname" value={user.nickname} placeholder="닉네임" onChange={change} />
                 <RegisterButton onClick={postUser}>회원가입</RegisterButton>
             </RegisterContainer>
         </div>
@@ -57,7 +56,7 @@ export default function RegisterPage()
 const Register = styled.h1`
     font-size:40px;
     text-align: center;
-    margin-top:70px;
+    padding-top: 150px;
 `
 
 const RegisterContainer = styled.div`
@@ -73,15 +72,17 @@ const IBox = styled.input`
     height: 50px;
     font-size: 25px;
     text-align: center;
+  font-family: maplestory, sans-serif;
 `
 
 const RegisterButton = styled.button`
     background-color: #6667AB;
-    border-color: #6667AB;
-    font-size: 25px;
+    font-size: 22px;
     color: #FFFFFF;
-    width: 200px;
-    height: 60px;
+    width: 160px;
+    height: 50px;
     border-radius: 20px;
-    margin-top: 40px;
+    border: none;
+    margin-top: 60px;
+    font-family: maplestory, sans-serif;
 `

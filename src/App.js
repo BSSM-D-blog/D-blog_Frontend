@@ -1,6 +1,6 @@
 import './styles/App.css';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { createContext, useEffect, useState } from 'react';
+import {createContext, useLayoutEffect, useState} from 'react';
 import WritePage from "./views/afterLogin/board/writePage";
 import MainPage from "./views/mainPage";
 import LoginPage from "./views/beforeLogin/auth/loginPage";
@@ -8,8 +8,10 @@ import RegisterPage from "./views/beforeLogin/auth/registerPage";
 import ReadPage from "./views/afterLogin/board/readPage";
 import Forbidden from "./views/beforeLogin/forbidden";
 import {instance} from "./util/axiosSetting";
+import Personal from "./views/afterLogin/personal/personal";
 
 const userinfo = {
+  username: "",
   id: 0,
   nickname: "",
   created: "",
@@ -24,7 +26,7 @@ function App() {
 
   const [user, setUser] = useState(userinfo)
 
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     (async()=>{
       try{
         setUser({
@@ -43,7 +45,7 @@ function App() {
   }, []);
 
   const getUser = () => {
-    return instance.get("/api/user")
+    return instance.get("/api/userinfo")
   }
 
   return (
@@ -54,8 +56,9 @@ function App() {
             <Route path = "/" element={<MainPage/>}/>
             <Route path = "/login" element={<LoginPage/>}/>
             <Route path = "/register" element={<RegisterPage/>}/>
-            <Route path = "/read" element={<ReadPage/>}/>
+            <Route path = "/read/:id" element={<ReadPage/>}/>
             <Route path={"/forbidden"} element={<Forbidden/>}/>
+            <Route path={"/personal/:id"} element={<Personal />}/>
           </Routes>
         </UserContext.Provider>
       </BrowserRouter>

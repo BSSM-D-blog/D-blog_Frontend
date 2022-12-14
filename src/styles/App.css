@@ -9,7 +9,7 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: none;
+    font-family: maplestory, sans-serif;
 }
 
 ul, ol, li{
@@ -19,9 +19,5 @@ ul, ol, li{
 a{
     text-decoration: none;
     display: inline;
-}
-
-body{
-    font-family: 'maplestory';
 }
 
