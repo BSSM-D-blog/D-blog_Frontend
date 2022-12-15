@@ -67,7 +67,7 @@ export default function MainPage(){
             <Adv src="img/bsnyou.png" alt="icon" />
             <PostContainer>
                 <div>
-                    {!loading && posts.map((value, index) => {
+                    {!loading && Object.values(posts).map((value, index) => {
                             return (
                                 <PreviewBoard value={value} key={index}/>
                             )
