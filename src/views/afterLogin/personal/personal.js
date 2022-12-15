@@ -56,7 +56,6 @@ export default function Personal(){
     const [modal, setModal] = useState(false);
     const [profileModal, setProfileModal] = useState(false);
     const [name, setName] = useState("");
-    const [modify, setModify] = useState(false);
 
     useLayoutEffect(()=>{
         instance.get(`/api/user/${param.id}`)

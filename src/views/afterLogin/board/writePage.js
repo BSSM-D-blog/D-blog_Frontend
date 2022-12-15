@@ -3,7 +3,7 @@ import LoginHeader from "../header/loginHeader";
 import styled from 'styled-components';
 import { UserContext } from '../../../App';
 import { instance } from '../../../util/axiosSetting';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function WritePage() 
 {
