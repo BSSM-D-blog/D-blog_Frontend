@@ -45,7 +45,6 @@ export default function Personal(){
 
     const user = useContext(UserContext);
     const param = useParams();
-    console.log(`is user ${param.id}`)
     const [personal, setPersonal] = useState({
         profile: "",
         nickname: "",
@@ -57,6 +56,7 @@ export default function Personal(){
     const [modal, setModal] = useState(false);
     const [profileModal, setProfileModal] = useState(false);
     const [name, setName] = useState("");
+    const [modify, setModify] = useState(false);
 
     useLayoutEffect(()=>{
         instance.get(`/api/user/${param.id}`)
@@ -66,10 +66,9 @@ export default function Personal(){
             .catch((error)=>{
                 console.log(error);
             })
-    }, [modal, profileModal])
+    }, [modal, profileModal, param.id])
 
     useLayoutEffect(()=>{
-        console.log(category)
         if(category === 0){
             setName("전체")
             instance.get(`/api/board/user/${param.id}`)
@@ -81,7 +80,6 @@ export default function Personal(){
                 })
         }else{
             personal.category.map((value)=>{
-                console.log(value)
                 if(category === value.category) setName(value.name);
                 return null;
             })
@@ -93,7 +91,7 @@ export default function Personal(){
                     console.log(error);
                 })
         }
-    }, [category]);
+    }, [category, param.id, personal.category, user.username]);
     
     const closeModal = () => {
         setModal(false)
@@ -120,7 +118,7 @@ export default function Personal(){
                 contentLabel={"Modal"}
                 ariaHideApp={false}
             >
-                <CreateCategory closeModal={closeModal} />
+                <CreateCategory closeModal={closeModal} mode={1} />
             </Modal>
             <Modal
                 isOpen={profileModal}
@@ -153,7 +151,6 @@ export default function Personal(){
                 {on && <p onClick={()=> setCategory(0)}>전체</p>}
                 {on &&
                     personal.category.map((value, index)=>{
-                    // return <p className={"category_name"} key={index} onClick={()=> setCategory(value.category)}>{value.name}</p>
                         return(
                             <LinesEllipsis
                                 text={value.name}
@@ -205,7 +202,6 @@ const CategoryName = styled.p`
 const Category = styled.div`
   width: 150px;
   height: 40px;
-  font-family: maplestory, sans-serif;
   border: none;
   font-size: 20px;
   position: absolute;
@@ -227,7 +223,6 @@ const Category = styled.div`
     display: flex;
     align-items: center;
   }
-  z-index: 10;
 `
 
 const PersonalRoot = styled.div`

@@ -19,8 +19,8 @@ export default function ReadPage(){
       filePath: "",
       category: "",
       profile: "",
-        username: "",
-        userid: 0,
+      username: "",
+      userid: 0,
     });
     const [comment, setComment] = useState({
       content: "",
@@ -37,7 +37,6 @@ export default function ReadPage(){
       (async ()=>{
           try{
               const data = (await instance.get(`/api/board/${param.id}`)).data
-              console.log(data);
               const newDate = (data.created.substring(0, 10) + " " + (data.created.substring(12, 13)).padStart(2, "0") + data.created.substring(13, 19)).replaceAll("-", "/")
               const newBoard = {
                   ...data,
@@ -46,13 +45,12 @@ export default function ReadPage(){
               setBoard(newBoard);
 
               const res = (await instance.get(`/api/comment/${param.id}`)).data
-              console.log(res.data);
               setGetComment(res.data);
           }catch(error){
               console.log(error)
           }
       })();
-    }, [refresh])
+    }, [refresh, param.id])
 
     const commentHandler = (e) => {
       const {value, name} = e.target;
@@ -82,6 +80,11 @@ export default function ReadPage(){
         nav(`/personal/${id}`)
     }
 
+    const deleteBoard = (id) => {
+      instance.delete(`/api/board/${id}`)
+      window.location.href = "/"
+    }
+
     return(
         <RootContainer>
             <LoginHeader />
@@ -101,6 +104,10 @@ export default function ReadPage(){
                     <p>{board.content}</p>
                     {board.filePath === "" ? <></> : <img src={"http://" + board.filePath} alt={"boardFile"} />}
                 </Content>
+                {user.id === board.userid && 
+                <DeleteAndModify>
+                  <button onClick={()=> deleteBoard(board.id)}>삭제</button>
+              </DeleteAndModify>}
             </ReadContainer>
             <WriteContainer>
                 <WriteComment>
@@ -139,6 +146,21 @@ export default function ReadPage(){
         </RootContainer>
     )
 }
+
+const DeleteAndModify = styled.div`
+  position: absolute;
+  right: 0;
+  button{
+    margin-left: 20px;
+    background: #6667AB;
+    border-radius: 20px;
+    width: 70px;
+    height: 35px;
+    border: none;
+    color: white;
+    font-size: 15px;
+  }
+`
 
 const Comment = styled.div`
   .content{
@@ -181,6 +203,7 @@ const WriteComment = styled.div`
       border-radius: 50%;
     }
     p{
+      margin-top: 5px;
       font-size: 1.2rem;
     }
     margin-right: 20px;
@@ -206,7 +229,6 @@ const WriteContainer = styled.div`
     border: none;
     color: white;
     font-size: 18px;
-    font-family: maplestory,sans-serif;
   }
   width: 65%;
   margin: 50px auto auto;
@@ -277,6 +299,7 @@ const ReadContainer = styled.div`
   height: 100%;
   border-bottom: 1px solid black;
   padding-bottom: 50px;
+  position: relative;
 `
 
 const RootContainer = styled.div`

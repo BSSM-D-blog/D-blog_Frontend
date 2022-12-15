@@ -3,8 +3,7 @@ import {instance} from "../../../util/axiosSetting";
 import styled from "styled-components";
 
 export default function CreateCategory({closeModal}){
-
-    const postCategory = () => {
+  const postCategory = () => {
         instance.post("/api/category", {
             "name": category
         })

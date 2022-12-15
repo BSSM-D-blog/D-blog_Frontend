@@ -33,7 +33,6 @@ function App() {
           ...(await getUser()).data,
           isLogin: true,
         })
-        console.log(user);
       }catch(error){
         setUser((prev)=>({
           ...prev,

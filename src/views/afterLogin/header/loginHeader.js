@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import React, {useContext, useState} from "react";
 import {UserContext} from "../../../App";
 import { AiOutlineUser } from "react-icons/ai";
@@ -9,7 +9,6 @@ const LoginHeader = () => {
     const [modal, setModal] = useState(false)
 
     const user = useContext(UserContext);
-    const navigator = useNavigate();
 
     const loginHeaderModal = () => {
         setModal((prev)=>!prev);
@@ -19,7 +18,7 @@ const LoginHeader = () => {
         <StyledHeader>
             <Link to = "/">
                 <Name>D-blog</Name></Link>
-            <Link to = "/write">
+            <Link to = "/write/1">
                 <Writing>글 쓰기</Writing></Link>
             <div></div>
             <ProfileContainer onClick={loginHeaderModal}>

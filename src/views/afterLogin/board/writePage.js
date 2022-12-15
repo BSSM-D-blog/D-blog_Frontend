@@ -3,12 +3,13 @@ import LoginHeader from "../header/loginHeader";
 import styled from 'styled-components';
 import { UserContext } from '../../../App';
 import { instance } from '../../../util/axiosSetting';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 function WritePage() 
 {
     const nav = useNavigate();
     const user = useContext(UserContext);
+
     const [input, setInput] = useState({
         user: user.username,
         title: "",

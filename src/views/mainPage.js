@@ -31,7 +31,7 @@ export default function MainPage(){
         (async()=>{
             try{
                 setLoading(true);
-                const pages = (await getPages()).data;
+                const pages = (await instance.get("/api/board/pages")).data;
                 setPage(pages);
                 setLoading(false);
             }catch(error){
@@ -44,8 +44,7 @@ export default function MainPage(){
         (async ()=>{
             try{
                 setLoading(true)
-                const posts = (await getPosts()).data;
-                console.log(posts)
+                const posts = (await instance.get(`/api/board?page=${currentPage}`)).data;
                 setPosts(posts)
                 setLoading(false)
             }catch(error){
@@ -53,14 +52,6 @@ export default function MainPage(){
             }
         })();
     }, [currentPage])
-
-    const getPosts = () => {
-        return instance.get(`/api/board?page=${currentPage}`)
-    }
-
-    const getPages = () => {
-        return instance.get("/api/board/pages")
-    }
 
     const setPageNum = () => {
         const arr = []

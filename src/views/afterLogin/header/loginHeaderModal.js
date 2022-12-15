@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function LoginHeaderModal({user}){
 
+  const nav = useNavigate();
     const goMyPage = () => {
-        window.location.href = `/personal/${user.id}`
+        nav(`/personal/${user.id}`)
     }
 
     const logout = () => {
