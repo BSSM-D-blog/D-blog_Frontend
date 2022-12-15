@@ -5,7 +5,9 @@ import LinesEllipsis from "react-lines-ellipsis";
 export default function PreviewBoard(props)
 {
     const value = props.value;
-    const newDate = value.created.substring(0, 10) + " " + value.created.substring(11, 19);
+    let created = "";
+    created = value.created;
+    const newDate = created.substring(0, 10) + " " + created.substring(11, 19);
 
     return(
         <Root key={value.id} to={`/read/${value.id}`}>
